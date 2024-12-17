@@ -32,8 +32,8 @@ public class UsersController {
 	}
 
 	@GetMapping("/{id}/edit")
-	public String edidtUserForm(@PathVariable(value = "id", required = true) long id, Model model,
-								RedirectAttributes attributes) {
+	public String editUserForm(@PathVariable(value = "id", required = true) long id, Model model,
+							   RedirectAttributes attributes) {
 		User user = userService.readUser(id);
 
 		if (null == user) {
@@ -60,7 +60,7 @@ public class UsersController {
 
 	@GetMapping("/delete")
 	public String deleteUser(@RequestParam(value = "id", required = true, defaultValue = "") long id,
-								   RedirectAttributes attributes) {
+							 RedirectAttributes attributes) {
 		User user = userService.deleteUser(id);
 
 		attributes.addFlashAttribute("flashMessage", (null == user) ?

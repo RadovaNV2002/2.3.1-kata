@@ -31,11 +31,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void createUser(User user) {
+    @Override
+    public void createUser(User user) {
         userDAO.createUser(user);
     }
 
-    private void updateUser(User user) {
+    @Override
+    public void updateUser(User user) {
         userDAO.updateUser(user);
     }
 
@@ -47,11 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User deleteUser(long id) {
         User user = null;
-        try {
-            user = userDAO.deleteUser(id);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        user = userDAO.deleteUser(id);
         return user;
     }
 }
