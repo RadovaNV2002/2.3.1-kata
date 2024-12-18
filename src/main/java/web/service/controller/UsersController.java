@@ -32,41 +32,30 @@ public class UsersController {
 	}
 
 	@GetMapping("/{id}/edit")
-	public String editUserForm(@PathVariable(value = "id", required = true) long id, Model model,
-							   RedirectAttributes attributes) {
+	public String editUserForm(@PathVariable(value = "id", required = true) long id, Model model, RedirectAttributes attributes) {
 		User user = userService.readUser(id);
-
 		if (null == user) {
 			attributes.addFlashAttribute("flashMessage", "User are not exists!");
 			return "redirect:/users";
 		}
-
 		model.addAttribute("user", userService.readUser(id));
 		return "form";
 	}
 
 	@PostMapping()
-	public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-						   RedirectAttributes attributes) {
+	public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, RedirectAttributes attributes) {
 		if (bindingResult.hasErrors()) {
 			return "form";
 		}
-
 		userService.createOrUpdateUser(user);
-		attributes.addFlashAttribute("flashMessage",
-				"User " + user.getFirstName() + " successfully created!");
+		attributes.addFlashAttribute("flashMessage", "User " + user.getFirstName() + " successfully created!");
 		return "redirect:/users";
 	}
 
 	@GetMapping("/delete")
-	public String deleteUser(@RequestParam(value = "id", required = true, defaultValue = "") long id,
-							 RedirectAttributes attributes) {
+	public String deleteUser(@RequestParam(value = "id", required = true, defaultValue = "") long id, RedirectAttributes attributes) {
 		User user = userService.deleteUser(id);
-
-		attributes.addFlashAttribute("flashMessage", (null == user) ?
-				"User are not exists!" :
-				"User " + user.getFirstName() + " successfully deleted!");
-
+		attributes.addFlashAttribute("flashMessage", (null == user) ? "User are not exists!" : "User " + user.getFirstName() + " successfully deleted!");
 		return "redirect:/users";
 	}
 }
